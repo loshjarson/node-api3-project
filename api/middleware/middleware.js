@@ -2,7 +2,12 @@ const Posts = require('../posts/posts-model');
 const Users = require('../users/users-model');
 
 function logger(req, res, next) {
-  console.log(req.url,req.method,req._startTime)
+  const date = new Date();
+  console.log(`
+    REQUEST METHOD: ${req.method}
+    REQUEST URL: ${req.originalUrl}
+    TIMESTAMP: ${date.toLocaleString()}
+  `);
   next()
 }
 
