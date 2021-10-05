@@ -15,8 +15,6 @@ server.use(mw.logger)
 server.use('/api/users', usersRouter)
 
 
-server
-
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
 });
