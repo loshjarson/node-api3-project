@@ -89,12 +89,28 @@ router.delete('/:id',mw.validateUserId, (req, res) => {
 });
 
 router.get('/:id/posts',mw.validateUserId, (req, res) => {
-  
+  const postArray = [];
+  Posts.get()
+  .then(posts => {
+    posts.forEach(post =>{
+      if(post.user_id == req.params.id) {
+        postArray.push(post)
+      }
+    })
+    res.status(200).json(postArray)
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).json({
+      message: 'Error retrieving posts',
+    });
+  })
   // RETURN THE ARRAY OF USER POSTS
   // this needs a middleware to verify user id
 });
 
-router.post('/:id/posts',mw.validateUserId, (req, res) => {
+router.post('/:id/posts',mw.validateUserId, mw.validatePost, (req, res) => {
+  Posts.insert()
   // RETURN THE NEWLY CREATED USER POST
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
