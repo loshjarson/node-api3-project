@@ -4,7 +4,6 @@ const Users = require('../users/users-model');
 function logger(req, res, next) {
   console.log(req.url,req.method,req._startTime)
   next()
-  // DO YOUR MAGIC
 }
 
 function validateUserId(req, res, next) {
@@ -12,16 +11,21 @@ function validateUserId(req, res, next) {
   Users.getById(id)
     .then(user => {
       if (!user) {
-        res.status(404).json({message: `User ${id} does not exist`})
+        res.status(404).json({message: "user not found"})
       } else {
         req.user = user
         next()
       }
     })
-  // DO YOUR MAGIC
 }
 
 function validateUser(req, res, next) {
+  const newUser = req.body;
+  if (!newUser.name) {
+    res.status(400).json({message: "missing required name field"})
+  } else {
+    next()
+  }
   // DO YOUR MAGIC
 }
 
